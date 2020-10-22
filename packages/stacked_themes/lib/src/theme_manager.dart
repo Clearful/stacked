@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -155,11 +156,15 @@ You can supply either a list of ThemeData objects to the themes property or a li
     if (themeMode != ThemeMode.system) {
       _applyStatusBarColor(
           _selectedThemeMode == ThemeMode.dark ? darkTheme : lightTheme);
+      // My code
+      _setStatusBarColor(isDarkMode: _selectedThemeMode == ThemeMode.dark);
     } else {
       var currentBrightness =
           SchedulerBinding.instance.window.platformBrightness;
       _applyStatusBarColor(
           currentBrightness == Brightness.dark ? darkTheme : lightTheme);
+      // My code
+      _setStatusBarColor(isDarkMode: currentBrightness == Brightness.dark);
     }
 
     _themesController.add(ThemeModel(
@@ -167,6 +172,29 @@ You can supply either a list of ThemeData objects to the themes property or a li
       darkTheme: darkTheme,
       themeMode: _selectedThemeMode,
     ));
+  }
+}
+
+_setStatusBarColor({@required bool isDarkMode}) {
+  if (Platform.isIOS) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
+      ),
+    );
+  } else if (Platform.isAndroid) {
+    // The following line is for this error: https://github.com/flutter/flutter/issues/40590
+    WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent, // Color for Android
+        statusBarBrightness: isDarkMode
+            ? Brightness.dark
+            : Brightness.light, // Dark == white status bar -- for IOS.
+        // systemNavigationBarColor: Colors.transparent, // navigation bar color
+      ),
+    );
   }
 }
 
