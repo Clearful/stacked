@@ -102,11 +102,9 @@ class _ThemeBuilderState extends State<ThemeBuilder>
     switch (themeManager.selectedThemeMode) {
       //do nothing
       case ThemeMode.light:
-        themeManager.setThemeMode(ThemeMode.light);
         break;
       //do nothing
       case ThemeMode.dark:
-        themeManager.setThemeMode(ThemeMode.dark);
         break;
       //reapply theme
       case ThemeMode.system:
