@@ -55,12 +55,6 @@ class ThemeManager {
   /// Returns true if the ThemeMode is dark. This does not apply when you're using system as ThemeMode
   bool get isDarkMode => _selectedThemeMode == ThemeMode.dark;
 
-  /// My code
-  Brightness _lastBrightness;
-  Brightness get lastBrightness => _lastBrightness;
-  set lastBrigtness(Brightness newBrightness) =>
-      _lastBrightness = newBrightness;
-
   ThemeManager({
     this.themes,
     this.statusBarColorBuilder,
@@ -106,8 +100,6 @@ You can supply either a list of ThemeData objects to the themes property or a li
           _selectedThemeMode == ThemeMode.dark ? darkTheme : lightTheme;
       _applyStatusBarColor(selectedTheme);
     }
-
-    _lastBrightness = _getCurrentBrightness();
 
     _themesController = BehaviorSubject<ThemeModel>.seeded(
       ThemeModel(
@@ -168,9 +160,8 @@ You can supply either a list of ThemeData objects to the themes property or a li
       _setStatusBarColor(isDarkMode: _selectedThemeMode == ThemeMode.dark);
     } else {
       // My code
-      // final currentBrightness =
-      //     SchedulerBinding.instance.window.platformBrightness;
-      final currentBrightness = _getCurrentBrightness();
+      final currentBrightness =
+          SchedulerBinding.instance.window.platformBrightness;
       _applyStatusBarColor(
           currentBrightness == Brightness.dark ? darkTheme : lightTheme);
       // My code
@@ -184,17 +175,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
     ));
   }
 
-  Brightness _getCurrentBrightness() {
-    return SchedulerBinding.instance.window.platformBrightness;
-  }
-
   _setStatusBarColor({@required bool isDarkMode}) {
-    if ((isDarkMode && lastBrightness == Brightness.dark) ||
-        (!isDarkMode && lastBrightness == Brightness.light)) {
-      return null;
-    }
-    _lastBrightness = _getCurrentBrightness();
-
     if (Platform.isIOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
