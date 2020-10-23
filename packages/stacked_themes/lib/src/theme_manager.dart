@@ -205,13 +205,19 @@ You can supply either a list of ThemeData objects to the themes property or a li
       // The following line is for this error: https://github.com/flutter/flutter/issues/40590
       WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
 
+      // SystemChrome.setSystemUIOverlayStyle(
+      //   SystemUiOverlayStyle.dark.copyWith(
+      //     statusBarColor: Colors.transparent, // Color for Android
+      //     statusBarBrightness: isDarkMode
+      //         ? Brightness.dark
+      //         : Brightness.light, // Dark == white status bar -- for IOS.
+      //     // systemNavigationBarColor: Colors.transparent, // navigation bar color
+      //   ),
+      // );
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: Colors.transparent, // Color for Android
-          statusBarBrightness: isDarkMode
-              ? Brightness.dark
-              : Brightness.light, // Dark == white status bar -- for IOS.
-          // systemNavigationBarColor: Colors.transparent, // navigation bar color
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
         ),
       );
     }
