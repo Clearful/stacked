@@ -203,7 +203,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
       );
     } else if (Platform.isAndroid) {
       // The following line is for this error: https://github.com/flutter/flutter/issues/40590
-      WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
+      // WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
 
       // SystemChrome.setSystemUIOverlayStyle(
       //   SystemUiOverlayStyle.dark.copyWith(
