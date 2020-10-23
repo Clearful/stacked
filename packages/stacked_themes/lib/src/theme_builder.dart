@@ -88,6 +88,7 @@ class _ThemeBuilderState extends State<ThemeBuilder>
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.resumed:
+        print('theme-builder resumed');
         adjustSystemThemeIfNecessary();
         break;
       case AppLifecycleState.paused:
