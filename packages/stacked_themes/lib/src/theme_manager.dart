@@ -189,13 +189,11 @@ You can supply either a list of ThemeData objects to the themes property or a li
   }
 
   _setStatusBarColor({@required bool isDarkMode}) {
-    print('last brightness $_lastBrightness');
     if ((isDarkMode && lastBrightness == Brightness.dark) ||
         (!isDarkMode && lastBrightness == Brightness.light)) {
       return null;
     }
     _lastBrightness = _getCurrentBrightness();
-    print('new brightness $_lastBrightness');
 
     if (Platform.isIOS) {
       SystemChrome.setSystemUIOverlayStyle(
