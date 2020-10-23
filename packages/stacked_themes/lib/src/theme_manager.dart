@@ -193,6 +193,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
         (!isDarkMode && lastBrightness == Brightness.light)) {
       return null;
     }
+    _lastBrightness = _getCurrentBrightness();
 
     if (Platform.isIOS) {
       SystemChrome.setSystemUIOverlayStyle(
